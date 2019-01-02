@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Sprite splitter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+	<button type="button" id="config-button">&#x2699;</button><!-- Gear emoji -->
+	<label id="drop-zone" for="hidden-input"><h1>Drop files or click me</h1></label>
+	<input type="file" id="hidden-input" accept="image/*" multiple hidden>
+	<canvas id="sprite-sheet" hidden></canvas>
+	<canvas id="sprite" hidden></canvas>
+	<section id="config-options">
+		<h3 id="config-header">Generator Options</h3>
+		<button type="button" id="config-close">&#x274C;</button> <!-- Cross mark emoji -->
+		<div id="configs-wrap">
+			<div id="config-main">
+				<label for="option-zipbundle">
+					<input id="option-zipbundle" type="checkbox" checked>
+					Generate a .zip bundle instead of multiple uncompressed images.<br>
+					(Trigger only one download in browsers instead of multiple files.)
+				</label>
+				<label for="option-gms">
+					<input id="option-gms" type="checkbox">
+					Add a first empty sprite as "empty tile" for Game Maker Studio 2 compatibility.
+				</label>
+				<label for="option-autoskip">
+					<input id="option-autoskip" type="checkbox">
+					Auto skip options window.
+				</label>
+				<label for="option-xoffset">X Offset: <input id="option-xoffset" type="number" value="0" step="1"></label>
+				<label for="option-xpadding">X Padding: <input id="option-xpadding" type="number" value="0" step="1"></label>
+				<label for="option-width">Width: <input id="option-width" type="number" value="32" step="1"></label>
+				<label for="option-yoffset">Y Offset: <input id="option-yoffset" type="number" value="0" step="1"></label>
+				<label for="option-ypadding">Y Padding: <input id="option-ypadding" type="number" value="0" step="1"></label>
+				<label for="option-height">Height: <input id="option-height" type="number" value="32" step="1"></label>
+				<label for="option-calcspritesheet">
+					<input id="option-calcspritesheet" type="checkbox">
+					Calculate columns and rows using "Width" and "Height" optioons.
+				</label>
+				<label for="option-columns">Sprite sheet columns: <input id="option-columns" type="number" value="4" step="1"></label>
+				<label for="option-rows">Sprite sheet rows: <input id="option-rows" type="number" value="4" step="1"></label>
+				<label hidden for="option-filelocation">File save location: <input id="option-filelocation" type="file" webkitdirectory></label>
+				<button id="generate-button" type="button" hidden>Generate</button>
+			</div>
+			</div>
+	</section>
+	<script src="./js/index.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "sprite-splitter",
+  "version": "1.0.0",
+  "description": "A sprite splitting/joining application.",
+  "main": "index.html",
+  "scripts": {
+    "start": "ws --https",
+    "start:electron": "electron",
+    "start:nw": "nw"
+  },
+  "single-instance": true,
+  "window": {
+    "width": 400,
+    "height": 400,
+    "min_width": 400,
+    "min_height": 360,
+    "title": "Sprite Splitter"
+  },
+  "author": "madcampos",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.0.0",
+    "eslint": "^5.11.1",
+    "local-web-server": "^2.6.1",
+    "nw": "^0.35.3"
+  }
+}

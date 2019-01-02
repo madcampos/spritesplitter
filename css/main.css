@@ -1,0 +1,117 @@
+body{
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+	color: dodgerblue;
+	background: black;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr 2rem;
+	grid-template-rows: 2rem 1fr;
+	grid-template-areas:
+		"inputs config"
+		"main main";
+	width: 100vw;
+	height: 100vh;
+}
+
+input{
+	color: inherit;
+	background: transparent;
+	border: none;
+	border-bottom: currentColor solid thin;
+	text-align: inherit;
+}
+
+input:not([type=checkbox]):not([type=radio]):focus{
+	outline: none;
+	box-shadow: none;
+	border: none;
+	border-bottom: skyblue dotted thin;
+}
+
+input[type=checkbox]:focus, input[type=radio]:focus, button:focus{
+	box-shadow: none;
+	border: none;
+	outline: thin skyblue dotted;
+}
+
+input[type=number]{width: 4rem;}
+
+input::-ms-input-placeholder{color: currentColor;}
+input::placeholder{color: currentColor;}
+
+button{
+	background: transparent;
+	font: inherit;
+	color: inherit;
+	text-align: center;
+	border: thin solid currentColor;
+	border-radius: 2rem;
+	align-self: center;
+	padding: 0.5rem 1.7rem;
+	margin: 1rem;
+}
+
+#drop-zone{
+	border: currentColor dashed thick;
+	border-radius: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+	padding: 1rem;
+	box-sizing: border-box;
+	grid-area: main;
+}
+
+#size-inputs{grid-area: inputs;}
+#config-button, #config-close{
+	border: none;
+	padding: 0;
+	margin: 0;
+	grid-area: config;
+}
+
+#config-options{
+	background: black;
+	display: none;
+	grid-area: 1 / 1 / -1 / -1;
+	grid-template-columns: 1fr 2rem;
+	grid-template-rows: 2rem 1fr;
+	grid-template-areas:
+		"header close"
+		"configmain configmain";
+	grid-gap: 1rem;
+	gap: 1rem;
+}
+
+#config-options:target{
+	display: grid;
+}
+
+#config-options h3{
+	margin: 0.5rem;
+}
+
+#config-header{grid-area: header;}
+#config-close{grid-area: close;}
+#config-main{
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+}
+
+#configs-wrap{
+	overflow-y: auto;
+	grid-area: configmain;
+}
+
+#config-main > label{
+	margin: 1rem;
+}
+
+#generate-button:disabled{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
