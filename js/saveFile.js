@@ -5,6 +5,8 @@
 import 'https://unpkg.com/jszip/dist/jszip.min.js';
 import {directorySavePath} from './dom-manipulation.js';
 
+//TODO: add writable files & cordova
+
 const bundleFiles = async (files) => {
 	const zipFile = new JSZip();
 	const spritesFolder = zipFile.folder('Sprites');
@@ -60,9 +62,22 @@ if (typeof Windows !== 'undefined') {
 			files = await bundleFiles(files);
 		}
 
-		//TODO: fix file permissions errors!
-		// const folder = await Windows.Storage.StorageFolder.getFolderFromPathAsync(document.getElementById('option-filelocation').value);
-		const folder = Windows.Storage.DownloadsFolder;
+		let folder;
+
+		if (options.askFileLocation) {
+			const folderPicker = new Windows.Storage.Pickers.FolderPicker();
+
+			folder = await folderPicker.pickSingleFolderAsync();
+		} else {
+			//TODO: fix file permissions errors!
+			try {
+				folder = await Windows.Storage.StorageFolder.getFolderFromPathAsync(document.getElementById('option-filelocation').value);
+			} catch (err) {
+				// TODO: handle error
+				folder = Windows.Storage.DownloadsFolder;
+			}
+		}
+
 
 		files.forEach(async (file) => {
 			const fsFile = await folder.createFileAsync(file.name, Windows.Storage.CreationCollisionOption.generateUniqueName);
@@ -74,7 +89,33 @@ if (typeof Windows !== 'undefined') {
 	};
 } else if (typeof require === 'function' && ((process && process.versions && process.versions.electron) || typeof nw === 'object')) {
 	//Electron/NWJS
-	//TODO: add option to always ask where to save files.
+	let pickSavePath;
+
+	if (typeof nw === 'object') {
+		pickSavePath = async () => {
+			// TODO: test
+			// document.getElementById('option-filelocation').click();
+			// document.getElementById('option-filelocation').dispatchEvent(new Event('click'));
+
+			return document.getElementById('option-filelocation').value || nw.App.dataPath;
+		};
+	} else {
+		pickSavePath = async () => {
+			const {app, dialog} = require('electron').remote;
+			let path = await dialog.showOpenDialog({
+				properties: ['openDirectory']
+			});
+
+			try {
+				path = path ? path[0] : app.getPath('downloads');
+			} catch (err) { //eslint-disable-line
+				path = app.getAppPath();
+			}
+
+			return path;
+		};
+	}
+
 	saveFiles = async (files, options) => {
 		const {writeFile, createWriteStream} = require('fs');
 		const {join} = require('path');
@@ -89,10 +130,15 @@ if (typeof Windows !== 'undefined') {
 					file.pipe(createWriteStream(file.name)).on('finish', resolve).on('error', reject);
 				} else {
 					const fileReader = new FileReader();
-					fileReader.addEventListener('load', (buffer) => {
+					fileReader.addEventListener('load', async (buffer) => {
 						buffer = new Buffer(buffer.target.result);
 
-						if (directorySavePath) {
+						if (options.askFileLocation) {
+							//TODO: ask where to save files.
+							const folder = await pickSavePath();
+
+							file.path = join(folder, file.name);
+						} else if (directorySavePath) {
 							file.path = join(directorySavePath, file.name);
 						} else {
 							file.path = join(process.pwd(), file.name);

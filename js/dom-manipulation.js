@@ -96,7 +96,8 @@ function getOptions(){
 		rows: Number.parseInt(document.getElementById('option-rows').value),
 		bundleFiles: document.getElementById('option-zipbundle').checked,
 		gmsCompatible: document.getElementById('option-gms').checked,
-		autoSkip: document.getElementById('option-autoskip').checked
+		autoSkip: document.getElementById('option-autoskip').checked,
+		askFileLocation: document.getElementById('option-askfilelocation').checked
 	};
 }
 
@@ -126,6 +127,24 @@ document.querySelectorAll('#config-options input[type=checkbox]').forEach((input
 	}
 
 	input.addEventListener('change', (evt) => localStorage.setItem(evt.target.id, evt.target.checked.toString()));
+});
+
+document.getElementById('option-askfilelocation').addEventListener('change', (evt) => {
+	if (evt.target.checked) {
+		document.querySelector('label[for=option-filelocation]').setAttribute('hidden', true);
+	} else {
+		document.querySelector('label[for=option-filelocation]').removeAttribute('hidden');
+	}
+});
+
+document.getElementById('option-calcspritesheet').addEventListener('change', (evt) => {
+	if (evt.target.checked) {
+		document.querySelector('label[for=option-columns]').setAttribute('hidden', true);
+		document.querySelector('label[for=option-rows]').setAttribute('hidden', true);
+	} else {
+		document.querySelector('label[for=option-columns]').removeAttribute('hidden');
+		document.querySelector('label[for=option-rows]').removeAttribute('hidden');
+	}
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -173,7 +192,8 @@ if (typeof Windows !== 'undefined') {
 
 	fileLabel.appendChild(fileSelectorButton);
 	//Keep hidden as folder access is hard on UWP
-	// fileLabel.hidden = false;
+	// fileLabel.removeAttribute('hidden');
+	// document.querySelector('label[for=option-askfilelocation]').removeAttribute('hidden');
 
 	document.getElementById('option-zipbundle').checked = false;
 } else if (typeof require === 'function' && process && process.versions && process.versions.electron) {
@@ -216,7 +236,9 @@ if (typeof Windows !== 'undefined') {
 	}
 
 	fileLabel.appendChild(fileSelectorButton);
-	fileLabel.hidden = false;
+	fileLabel.removeAttribute('hidden');
+	document.querySelector('label[for=option-askfilelocation]').removeAttribute('hidden');
+
 	document.getElementById('option-zipbundle').checked = false;
 } else if (typeof require === 'function' && typeof nw === 'object') {
 	//NWJS
@@ -237,7 +259,8 @@ if (typeof Windows !== 'undefined') {
 		fileInput.dataset.path = nw.App.dataPath;
 	}
 
-	document.querySelector('label[for=option-filelocation]').hidden = false;
+	document.querySelector('label[for=option-filelocation]').removeAttribute('hidden');
+	document.querySelector('label[for=option-askfilelocation]').removeAttribute('hidden');
 	document.getElementById('option-zipbundle').checked = false;
 }
 

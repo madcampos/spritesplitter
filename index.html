@@ -30,18 +30,22 @@
 					<input id="option-autoskip" type="checkbox">
 					Auto skip options window.
 				</label>
-				<label for="option-xoffset">X Offset: <input id="option-xoffset" type="number" value="0" step="1"></label>
-				<label for="option-xpadding">X Padding: <input id="option-xpadding" type="number" value="0" step="1"></label>
 				<label for="option-width">Width: <input id="option-width" type="number" value="32" step="1"></label>
-				<label for="option-yoffset">Y Offset: <input id="option-yoffset" type="number" value="0" step="1"></label>
-				<label for="option-ypadding">Y Padding: <input id="option-ypadding" type="number" value="0" step="1"></label>
 				<label for="option-height">Height: <input id="option-height" type="number" value="32" step="1"></label>
+				<label for="option-xoffset">X Offset: <input id="option-xoffset" type="number" value="0" step="1"></label>
+				<label for="option-yoffset">Y Offset: <input id="option-yoffset" type="number" value="0" step="1"></label>
+				<label for="option-xpadding">X Padding: <input id="option-xpadding" type="number" value="0" step="1"></label>
+				<label for="option-ypadding">Y Padding: <input id="option-ypadding" type="number" value="0" step="1"></label>
 				<label for="option-calcspritesheet">
 					<input id="option-calcspritesheet" type="checkbox">
-					Calculate columns and rows using "Width" and "Height" optioons.
+					Calculate columns and rows using "Width" and "Height" options.
 				</label>
 				<label for="option-columns">Sprite sheet columns: <input id="option-columns" type="number" value="4" step="1"></label>
 				<label for="option-rows">Sprite sheet rows: <input id="option-rows" type="number" value="4" step="1"></label>
+				<label hidden for="option-askfilelocation">
+					<input id="option-askfilelocation" type="checkbox" checked>
+					Always ask for file location.
+				</label>
 				<label hidden for="option-filelocation">File save location: <input id="option-filelocation" type="file" webkitdirectory></label>
 				<button id="generate-button" type="button" hidden>Generate</button>
 			</div>
