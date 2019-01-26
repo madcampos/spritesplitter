@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "ws --https",
-    "start:electron": "electron",
+    "start:electron": "electron ./main.js",
     "start:nw": "nw"
   },
   "single-instance": true,
